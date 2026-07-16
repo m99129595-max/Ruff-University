@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruff University — Like a Diamond in the Ruff</title>
+<meta name="description" content="Ruff University gathers the whole world of artificial intelligence into one place. Free structured courses from first principles to the frontier.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ice:#F4F7FC;
+  --panel:#FFFFFF;
+  --ink:#111623;
+  --dim:#5B6475;
+  --line:#DDE4EF;
+  --facet-a:#4D8DE8;
+  --facet-b:#7A6CF0;
+  --facet-c:#C965D8;
+  --gold:#B9860F;
+  --gold-soft:#F4E3B8;
+  --ok:#1F8A5B;
+  --prism:linear-gradient(120deg,#4D8DE8 0%,#7A6CF0 48%,#C965D8 100%);
+  --radius:14px;
+  --shadow:0 10px 30px rgba(17,22,35,.08);
+  --maxw:1120px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Instrument Sans",system-ui,sans-serif;
+  background:var(--ice);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--gold-soft)}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--facet-a);outline-offset:2px;border-radius:4px}
+
+/* ---------- shared ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+.eyebrow{
+  font-family:"Space Mono",monospace;font-size:.72rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--dim);
+}
+.eyebrow .spark{color:var(--gold)}
+h1,h2,h3{line-height:1.15;letter-spacing:-.01em}
+.display{font-family:"Unbounded",sans-serif;font-weight:800}
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;border:none;border-radius:999px;
+  padding:.8rem 1.5rem;font-weight:600;font-size:.95rem;transition:transform .15s,box-shadow .15s;
+  text-decoration:none;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-prism{background:var(--ink);color:#fff}
+.btn-prism:hover{box-shadow:0 8px 22px rgba(17,22,35,.25)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--ink)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+
+/* ---------- header ---------- */
+header{
+  position:sticky;top:0;z-index:50;background:rgba(244,247,252,.85);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;font-family:"Unbounded",sans-serif;font-weight:600;font-size:.95rem}
+.logo svg{flex:none}
+.nav-links{display:flex;gap:.35rem;align-items:center}
+.nav-links a{
+  text-decoration:none;font-weight:500;font-size:.92rem;color:var(--dim);
+  padding:.45rem .85rem;border-radius:999px;transition:color .15s,background .15s;
+}
+.nav-links a:hover{color:var(--ink);background:#fff}
+.nav-links a.active{color:var(--ink);background:#fff;box-shadow:var(--shadow)}
+.menu-btn{display:none;background:none;border:1.5px solid var(--line);border-radius:10px;padding:.4rem .6rem}
+
+/* ---------- hero ---------- */
+.hero{padding:76px 0 64px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(2.1rem,5vw,3.6rem);margin:.9rem 0 1.1rem}
+.hero h1 .prism-text{
+  background:var(--prism);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p.lede{font-size:1.12rem;color:var(--dim);max-width:34rem;margin-bottom:1.8rem}
+.hero-actions{display:flex;gap:.8rem;flex-wrap:wrap}
+.hero-stats{display:flex;gap:2.2rem;margin-top:2.4rem;flex-wrap:wrap}
+.hero-stats div strong{font-family:"Unbounded",sans-serif;font-size:1.35rem;display:block}
+.hero-stats div span{font-size:.85rem;color:var(--dim)}
+
+/* the signature diamond */
+.gem-stage{display:flex;justify-content:center}
+.gem{width:min(340px,72vw);filter:drop-shadow(0 24px 40px rgba(122,108,240,.25))}
+@media (prefers-reduced-motion:no-preference){
+  .gem{animation:gemfloat 7s ease-in-out infinite}
+  .gem .flash{animation:refract 5.5s ease-in-out infinite}
+}
+@keyframes gemfloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
+@keyframes refract{0%,100%{opacity:.15}50%{opacity:.75}}
+
+/* ---------- cut path ---------- */
+.cutpath{padding:56px 0 12px}
+.cut-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:26px}
+.cut-step{padding:18px 16px;position:relative}
+.cut-step .mono{font-family:"Space Mono",monospace;font-size:.7rem;color:var(--gold);letter-spacing:.12em}
+.cut-step h3{font-size:1rem;margin:.35rem 0 .3rem}
+.cut-step p{font-size:.83rem;color:var(--dim);line-height:1.45}
+
+/* ---------- catalog ---------- */
+.catalog{padding:56px 0 80px}
+.catalog-head{display:flex;justify-content:space-between;align-items:end;gap:1rem;flex-wrap:wrap;margin-bottom:22px}
+.catalog-head h2{font-size:clamp(1.5rem,3vw,2.1rem)}
+.toolbar{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:24px}
+.search{
+  flex:1;min-width:230px;display:flex;align-items:center;gap:.5rem;background:#fff;
+  border:1.5px solid var(--line);border-radius:999px;padding:.6rem 1.1rem;
+}
+.search input{border:none;outline:none;font:inherit;width:100%;background:transparent}
+.chip{
+  border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:.5rem 1rem;
+  font-size:.85rem;font-weight:500;color:var(--dim);transition:all .15s;
+}
+.chip:hover{border-color:var(--ink);color:var(--ink)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.course-card{
+  padding:22px;display:flex;flex-direction:column;gap:.6rem;text-align:left;
+  transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden;
+}
+.course-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.course-card .facet-mark{position:absolute;top:0;right:0;width:74px;height:74px;opacity:.9}
+.course-card h3{font-size:1.12rem;padding-right:52px}
+.course-card .desc{font-size:.9rem;color:var(--dim);flex:1}
+.course-meta{display:flex;gap:.9rem;align-items:center;font-family:"Space Mono",monospace;font-size:.7rem;color:var(--dim);letter-spacing:.06em}
+.carat{color:var(--gold);font-weight:700}
+.pbar{height:6px;background:var(--ice);border-radius:99px;overflow:hidden;margin-top:.3rem}
+.pbar i{display:block;height:100%;background:var(--prism);border-radius:99px;transition:width .4s}
+
+/* ---------- course + lesson views ---------- */
+.page{padding:44px 0 90px}
+.crumbs{font-size:.85rem;color:var(--dim);margin-bottom:18px}
+.crumbs a{color:var(--dim)}
+.crumbs a:hover{color:var(--ink)}
+.course-hero{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap;margin-bottom:34px}
+.course-hero .facet-big{flex:none}
+.course-hero h1{font-size:clamp(1.7rem,4vw,2.5rem);margin:.4rem 0 .6rem}
+.course-hero p{color:var(--dim);max-width:42rem}
+.module{margin-bottom:14px;overflow:hidden}
+.module-head{
+  width:100%;display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  background:none;border:none;padding:18px 22px;text-align:left;
+}
+.module-head h3{font-size:1.05rem}
+.module-head .mono{font-family:"Space Mono",monospace;font-size:.72rem;color:var(--dim)}
+.lesson-list{list-style:none;border-top:1px solid var(--line)}
+.lesson-list li{border-bottom:1px solid var(--line)}
+.lesson-list li:last-child{border-bottom:none}
+.lesson-link{
+  width:100%;display:flex;align-items:center;gap:.9rem;padding:14px 22px;background:none;
+  border:none;text-align:left;font-size:.95rem;transition:background .12s;
+}
+.lesson-link:hover{background:var(--ice)}
+.tick{
+  width:22px;height:22px;flex:none;border-radius:50%;border:2px solid var(--line);
+  display:grid;place-items:center;font-size:.7rem;color:#fff;
+}
+.tick.done{background:var(--ok);border-color:var(--ok)}
+
+.lesson-page{max-width:760px;margin:0 auto}
+.lesson-page h1{font-size:clamp(1.6rem,4vw,2.2rem);margin:.5rem 0 1.4rem}
+.lesson-body h2{font-size:1.25rem;margin:1.9rem 0 .7rem}
+.lesson-body p{margin-bottom:1rem;color:#2A3040}
+.lesson-body ul,.lesson-body ol{margin:0 0 1rem 1.4rem;color:#2A3040}
+.lesson-body li{margin-bottom:.4rem}
+.lesson-body code{
+  font-family:"Space Mono",monospace;font-size:.85em;background:#EDF1F8;
+  padding:.12em .4em;border-radius:6px;
+}
+.keybox{
+  border-left:4px solid;border-image:var(--prism) 1;background:#fff;
+  padding:16px 20px;margin:1.4rem 0;border-radius:0 var(--radius) var(--radius) 0;
+  box-shadow:var(--shadow);
+}
+.keybox .eyebrow{margin-bottom:.4rem}
+.lesson-nav{display:flex;justify-content:space-between;gap:.8rem;margin-top:2.6rem;flex-wrap:wrap}
+
+/* ---------- quiz ---------- */
+.quiz{margin-top:2.6rem;padding:26px}
+.quiz h2{font-size:1.2rem;margin-bottom:.3rem}
+.quiz .sub{font-size:.88rem;color:var(--dim);margin-bottom:1.2rem}
+.q{margin-bottom:1.4rem}
+.q p.qt{font-weight:600;margin-bottom:.6rem}
+.opt{
+  display:block;width:100%;text-align:left;background:var(--ice);border:1.5px solid var(--line);
+  border-radius:10px;padding:.7rem 1rem;margin-bottom:.5rem;font-size:.92rem;transition:all .12s;
+}
+.opt:hover{border-color:var(--facet-a)}
+.opt.picked{border-color:var(--facet-b);background:#F0EDFF}
+.opt.right{border-color:var(--ok);background:#E8F6EF}
+.opt.wrong{border-color:#C94A4A;background:#FBEDED}
+.quiz-result{font-weight:600;margin-top:.6rem}
+
+/* ---------- dashboard ---------- */
+.dash-grid{display:grid;grid-template-columns:340px 1fr;gap:26px;align-items:start}
+.dash-gem{padding:28px;text-align:center}
+.dash-gem h2{font-size:1.15rem;margin-bottom:.2rem}
+.dash-gem .sub{font-size:.85rem;color:var(--dim)}
+.dash-gem svg{width:200px;margin:18px auto 6px;display:block}
+.gem-facet{fill:#E7ECF5;stroke:#fff;stroke-width:1.5;transition:fill .5s}
+.gem-facet.lit-0{fill:#BFD8F7}.gem-facet.lit-1{fill:#9DBBF2}
+.gem-facet.lit-2{fill:#8E9BEF}.gem-facet.lit-3{fill:#A97FE3}.gem-facet.lit-4{fill:#C965D8}
+.dash-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:22px}
+.stat{padding:18px}
+.stat strong{font-family:"Unbounded",sans-serif;font-size:1.5rem;display:block}
+.stat span{font-size:.8rem;color:var(--dim)}
+.dash-course{display:flex;align-items:center;gap:1rem;padding:14px 18px;margin-bottom:10px}
+.dash-course .name{flex:1;font-weight:600;font-size:.95rem}
+.dash-course .pbar{flex:2;margin:0}
+.dash-course .pct{font-family:"Space Mono",monospace;font-size:.75rem;width:44px;text-align:right}
+
+/* ---------- glossary ---------- */
+.gloss-item{padding:18px 22px;margin-bottom:10px}
+.gloss-item dt{font-weight:700;margin-bottom:.2rem}
+.gloss-item dd{color:var(--dim);font-size:.92rem}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:34px 0;margin-top:20px}
+.foot{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:var(--dim);font-size:.85rem}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .gem-stage{order:-1}
+  .cut-row{grid-template-columns:repeat(2,1fr)}
+  .dash-grid{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .nav-links{
+    display:none;position:absolute;top:64px;left:0;right:0;background:#fff;
+    flex-direction:column;align-items:stretch;padding:12px;border-bottom:1px solid var(--line);
+  }
+  .nav-links.open{display:flex}
+  .menu-btn{display:block}
+  .cut-row{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#/" aria-label="Ruff University home">
+      <svg width="30" height="30" viewBox="0 0 40 40" aria-hidden="true">
+        <polygon points="20,2 34,13 28,36 12,36 6,13" fill="none" stroke="#111623" stroke-width="2.4"/>
+        <polygon points="20,2 34,13 20,20" fill="#4D8DE8"/>
+        <polygon points="34,13 28,36 20,20" fill="#7A6CF0"/>
+        <polygon points="28,36 12,36 20,20" fill="#C965D8"/>
+        <polygon points="12,36 6,13 20,20" fill="#7A6CF0" opacity=".55"/>
+        <polygon points="6,13 20,2 20,20" fill="#4D8DE8" opacity=".55"/>
+      </svg>
+      Ruff University
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#/" data-nav="home">Home</a>
+      <a href="#/courses" data-nav="courses">Courses</a>
+      <a href="#/infinite" data-nav="infinite">Infinite Library</a>
+      <a href="#/progress" data-nav="progress">My Progress</a>
+      <a href="#/glossary" data-nav="glossary">Glossary</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app"><noscript><div style="max-width:1120px;margin:16px auto;padding:14px 22px;background:#FBEDED;border:1px solid #C94A4A;border-radius:14px;font-family:sans-serif">This site needs JavaScript to open courses and lessons. Enable JavaScript or open this file in a regular browser like Chrome or Safari.</div></noscript>
+  <section class="hero"><div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="spark">◆</span> The free school of artificial intelligence</div>
+      <h1 class="display">Every facet of AI.<br><span class="prism-text">Cut for everyone.</span></h1>
+      <p class="lede">Ruff University gathers the whole world of artificial intelligence into one place: from your first "what is AI?" to transformers, diffusion, edge deployment, and safety. You arrive rough. You leave brilliant.</p>
+      <div class="hero-actions">
+        <a class="btn btn-prism" href="#/courses">Start learning ◆</a>
+        <a class="btn btn-ghost" href="#/infinite">Infinite Library</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>10</strong><span>courses</span></div>
+        <div><strong>33</strong><span>lessons</span></div>
+        <div><strong>24</strong><span>glossary terms</span></div>
+        <div><strong>0 EGP</strong><span>forever</span></div>
+      </div>
+    </div>
+    <div class="gem-stage"><svg class="gem" viewBox="0 0 300 300" role="img" aria-label="A rotating cut diamond, the emblem of Ruff University">
+    <defs>
+      <linearGradient id="ga" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#4D8DE8"></stop><stop offset=".5" stop-color="#7A6CF0"></stop><stop offset="1" stop-color="#C965D8"></stop>
+      </linearGradient>
+    </defs>
+    <polygon points="150,20 250,105 205,275 95,275 50,105" fill="none" stroke="url(#ga)" stroke-width="3"></polygon>
+    <polygon points="150,20 250,105 150,150" fill="#4D8DE8" opacity=".85"></polygon>
+    <polygon points="250,105 205,275 150,150" fill="#7A6CF0" opacity=".8"></polygon>
+    <polygon points="205,275 95,275 150,150" fill="#C965D8" opacity=".75"></polygon>
+    <polygon points="95,275 50,105 150,150" fill="#7A6CF0" opacity=".45"></polygon>
+    <polygon points="50,105 150,20 150,150" fill="#4D8DE8" opacity=".45"></polygon>
+    <polygon class="flash" points="150,20 250,105 150,150" fill="#fff" opacity=".2"></polygon>
+    <polygon points="120,60 175,45 150,95" fill="#fff" opacity=".35"></polygon>
+  </svg></div>
+  </div></section>
+
+  <section class="cutpath"><div class="wrap">
+    <div class="eyebrow"><span class="spark">◆</span> The cut path</div>
+    <h2 style="font-size:1.6rem;margin-top:.4rem">Five stages, rough to brilliant</h2>
+    <div class="cut-row">
+      
+      <div class="card cut-step">
+        <div class="mono">◆ 1 CARAT</div>
+        <h3>Rough</h3>
+        <p>First contact. What AI is, its history, and the math beneath it.</p>
+      </div>
+      <div class="card cut-step">
+        <div class="mono">◆◆ 2 CARAT</div>
+        <h3>Cleaved</h3>
+        <p>Core machine learning: models, evaluation, and honest science.</p>
+      </div>
+      <div class="card cut-step">
+        <div class="mono">◆◆◆ 3 CARAT</div>
+        <h3>Cut</h3>
+        <p>Deep learning, vision, and language: the engines of the modern era.</p>
+      </div>
+      <div class="card cut-step">
+        <div class="mono">◆◆◆◆ 4 CARAT</div>
+        <h3>Polished</h3>
+        <p>The frontier: generative AI and reinforcement learning.</p>
+      </div>
+      <div class="card cut-step">
+        <div class="mono">◆◆◆◆◆ 5 CARAT</div>
+        <h3>Brilliant</h3>
+        <p>Mastery in the world: deployment, ethics, and responsibility.</p>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="catalog"><div class="wrap">
+    <div class="catalog-head">
+      <div>
+        <div class="eyebrow"><span class="spark">◆</span> Featured</div>
+        <h2>Begin at the beginning</h2>
+      </div>
+      <a class="btn btn-ghost" href="#/courses">All courses</a>
+    </div>
+    <div class="course-grid">
+  <a class="card course-card" href="#/course/foundations" style="text-decoration:none">
+    <div class="facet-mark"><svg width="74" height="74" viewBox="0 0 40 40" aria-hidden="true">
+    <polygon points="20,3 33,12 28,34 12,34 7,12" fill="none" stroke="#4D8DE8" stroke-width="2"></polygon>
+    <polygon points="20,3 33,12 20,19" fill="#4D8DE8" opacity=".9"></polygon>
+    <polygon points="33,12 28,34 20,19" fill="#7A6CF0" opacity=".85"></polygon>
+    <polygon points="28,34 12,34 20,19" fill="#7A6CF0" opacity=".45"></polygon>
+    <polygon points="7,12 20,3 20,19" fill="#4D8DE8" opacity=".45"></polygon></svg></div>
+    <div class="course-meta"><span class="carat">◆</span> ROUGH · CORE</div>
+    <h3>Foundations of AI</h3>
+    <p class="desc">What artificial intelligence actually is, where it came from, and the map of the whole field.</p>
+    <div class="course-meta">3 lessons · quiz</div>
+    <div class="pbar"><i style="width:0%"></i></div>
+  </a>
+  <a class="card course-card" href="#/course/math-ml" style="text-decoration:none">
+    <div class="facet-mark"><svg width="74" height="74" viewBox="0 0 40 40" aria-hidden="true">
+    <polygon points="20,3 33,12 28,34 12,34 7,12" fill="none" stroke="#4D8DE8" stroke-width="2"></polygon>
+    <polygon points="20,3 33,12 20,19" fill="#4D8DE8" opacity=".9"></polygon>
+    <polygon points="33,12 28,34 20,19" fill="#7A6CF0" opacity=".85"></polygon>
+    <polygon points="28,34 12,34 20,19" fill="#7A6CF0" opacity=".45"></polygon>
+    <polygon points="7,12 20,3 20,19" fill="#4D8DE8" opacity=".45"></polygon></svg></div>
+    <div class="course-meta"><span class="carat">◆</span> ROUGH · CORE</div>
+    <h3>Math for Machine Learning</h3>
+    <p class="desc">The three pillars under every model: linear algebra, calculus, and probability, taught with intuition first.</p>
+    <div class="course-meta">3 lessons · quiz</div>
+    <div class="pbar"><i style="width:0%"></i></div>
+  </a>
+  <a class="card course-card" href="#/course/machine-learning" style="text-decoration:none">
+    <div class="facet-mark"><svg width="74" height="74" viewBox="0 0 40 40" aria-hidden="true">
+    <polygon points="20,3 33,12 28,34 12,34 7,12" fill="none" stroke="#5FA8E0" stroke-width="2"></polygon>
+    <polygon points="20,3 33,12 20,19" fill="#5FA8E0" opacity=".9"></polygon>
+    <polygon points="33,12 28,34 20,19" fill="#8E6CE8" opacity=".85"></polygon>
+    <polygon points="28,34 12,34 20,19" fill="#8E6CE8" opacity=".45"></polygon>
+    <polygon points="7,12 20,3 20,19" fill="#5FA8E0" opacity=".45"></polygon></svg></div>
+    <div class="course-meta"><span class="carat">◆◆</span> CLEAVED · CORE</div>
+    <h3>Machine Learning</h3>
+    <p class="desc">Supervised and unsupervised learning, model evaluation, and the eternal battle against overfitting.</p>
+    <div class="course-meta">4 lessons · quiz</div>
+    <div class="pbar"><i style="width:0%"></i></div>
+  </a></div>
+  </div></section></main>
+
+<footer>
+  <div class="wrap foot">
+    <span>Ruff University — Like a Diamond in the Ruff</span>
+    <span>Every facet of AI, cut for everyone. Free forever.</span>
+  </div>
+</footer>
+
+<script>
+/* =====================================================
+   RUFF UNIVERSITY — curriculum data
+   Levels (carats): 1 Rough → 2 Cleaved → 3 Cut → 4 Polished → 5 Brilliant
+===================================================== */
+const LEVELS = ["Rough","Cleaved","Cut","Polished","Brilliant"];
+
+const COURSES = [
+{
+id:"foundations", title:"Foundations of AI", level:1, facet:"Core",
+desc:"What artificial intelligence actually is, where it came from, and the map of the whole field.",
+modules:[
+ {title:"The Big Picture", lessons:[
+  {id:"what-is-ai", title:"What is Artificial Intelligence?", body:`
+<p>Artificial intelligence is the science of building systems that perform tasks which normally require human intelligence: recognizing images, understanding language, making decisions, and learning from experience.</p>
+<p>A useful way to think about AI is as a spectrum of approaches. On one end sit <strong>rule-based systems</strong>, where humans write explicit instructions ("if the temperature exceeds 30, turn on the fan"). On the other end sits <strong>machine learning</strong>, where the system discovers its own rules by finding patterns in data. Nearly all of modern AI lives on the machine learning end.</p>
+<h2>Intelligence as prediction</h2>
+<p>Most working AI systems can be reframed as prediction machines. A spam filter predicts "spam or not spam." A translation model predicts the next word in the target language. A self-driving system predicts what the scene will look like a moment from now. When prediction becomes cheap and accurate, decisions built on those predictions become possible.</p>
+<h2>Narrow vs. general</h2>
+<p><strong>Narrow AI</strong> excels at one task: playing chess, detecting tumors, recommending videos. Every deployed AI system today is narrow. <strong>Artificial general intelligence (AGI)</strong> would match human flexibility across virtually any task, and remains a research goal rather than a reality, though modern large models are far more general than anything before them.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>AI = systems performing tasks that normally need human intelligence.</li>
+<li>Modern AI is dominated by machine learning: rules learned from data, not written by hand.</li>
+<li>All deployed AI today is narrow; generality is the frontier.</li></ul></div>`},
+  {id:"history", title:"A Short History of AI", body:`
+<p>AI's history is a story of summers and winters: waves of excitement followed by funding droughts when promises outran results.</p>
+<h2>1950–1970: The birth</h2>
+<p>Alan Turing's 1950 paper asked "Can machines think?" and proposed the imitation game, now called the Turing test. The field was named at the 1956 Dartmouth workshop. Early programs proved theorems and played checkers, and optimism ran wild.</p>
+<h2>1970–2010: Winters and workhorses</h2>
+<p>Two AI winters (mid-70s and late-80s) followed overpromising. But quiet progress continued: expert systems ran factories, and in 1997 IBM's Deep Blue defeated world chess champion Garry Kasparov. Meanwhile a small community kept improving neural networks, waiting for enough data and compute.</p>
+<h2>2012–today: The deep learning era</h2>
+<p>In 2012, a neural network called AlexNet crushed the ImageNet image-recognition competition, igniting the deep learning revolution. Milestones followed fast: AlphaGo beating Lee Sedol at Go (2016), the transformer architecture (2017), and large language models like GPT and Claude bringing AI into everyday life (2020s).</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>The field cycles between hype summers and funding winters.</li>
+<li>2012's AlexNet moment launched the deep learning era.</li>
+<li>Transformers (2017) power today's large language models.</li></ul></div>`},
+  {id:"map-of-ai", title:"The Map of the Field", body:`
+<p>AI is not one technique but a family of subfields. Here is the map you will use to navigate the rest of Ruff University.</p>
+<h2>The core stack</h2>
+<ul>
+<li><strong>Machine learning (ML):</strong> algorithms that learn patterns from data. The foundation of everything below.</li>
+<li><strong>Deep learning:</strong> ML using multi-layer neural networks. Dominates when data is plentiful.</li>
+<li><strong>Computer vision:</strong> teaching machines to see: classification, detection, segmentation.</li>
+<li><strong>Natural language processing (NLP):</strong> teaching machines to read, write, and converse.</li>
+<li><strong>Reinforcement learning (RL):</strong> learning by trial, error, and reward: games, robotics, model alignment.</li>
+<li><strong>Generative AI:</strong> models that create new text, images, audio, and code.</li>
+<li><strong>Robotics and edge AI:</strong> putting intelligence into physical machines and small devices.</li>
+</ul>
+<h2>The supporting disciplines</h2>
+<p>Around the core sit <strong>data engineering</strong> (getting clean data to models), <strong>MLOps</strong> (deploying and monitoring models in production), and <strong>AI ethics and safety</strong> (making sure systems are fair, robust, and aligned with human values). Serious practitioners study all three.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>ML is the foundation; deep learning is its most powerful form.</li>
+<li>Vision, language, RL, and generation are the main application facets.</li>
+<li>Data, deployment, and ethics turn research into responsible products.</li></ul></div>`}
+ ]}
+],
+quiz:[
+ {q:"What distinguishes machine learning from rule-based AI?",opts:["ML is always faster","ML discovers rules from data instead of following hand-written rules","ML only works on images","Rule-based AI is more accurate"],a:1},
+ {q:"Which 2012 event ignited the deep learning era?",opts:["Deep Blue beating Kasparov","The Dartmouth workshop","AlexNet winning ImageNet","AlphaGo beating Lee Sedol"],a:2},
+ {q:"Every AI system deployed today is best described as…",opts:["Artificial general intelligence","Narrow AI","Conscious","Rule-based"],a:1}
+]},
+
+{
+id:"math-ml", title:"Math for Machine Learning", level:1, facet:"Core",
+desc:"The three pillars under every model: linear algebra, calculus, and probability, taught with intuition first.",
+modules:[
+ {title:"The Three Pillars", lessons:[
+  {id:"linear-algebra", title:"Linear Algebra Essentials", body:`
+<p>Machine learning is, at its heart, arithmetic on giant grids of numbers. Linear algebra is the language of those grids.</p>
+<h2>Vectors and matrices</h2>
+<p>A <strong>vector</strong> is an ordered list of numbers: a house might be the vector [3 bedrooms, 120 m², 15 years old]. A <strong>matrix</strong> is a grid of numbers: a dataset of 1,000 houses is a 1000×3 matrix. An image is a matrix of pixel values. Everything a model touches becomes vectors and matrices, collectively called <strong>tensors</strong>.</p>
+<h2>The two operations that matter most</h2>
+<p>The <strong>dot product</strong> multiplies two vectors element-by-element and sums the result. It measures similarity: two vectors pointing the same way have a large dot product. Search engines and recommendation systems are built on this idea.</p>
+<p><strong>Matrix multiplication</strong> chains dot products together, transforming whole datasets at once. A neural network layer is literally one matrix multiplication followed by a simple nonlinear function. GPUs exist in AI because they multiply matrices extraordinarily fast.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Data becomes vectors, matrices, and tensors.</li>
+<li>Dot products measure similarity; matrix multiplication transforms data.</li>
+<li>A neural network layer = matrix multiply + nonlinearity.</li></ul></div>`},
+  {id:"calculus", title:"Calculus and Gradients", body:`
+<p>Training a model means making it slightly less wrong, millions of times in a row. Calculus tells us which direction "less wrong" is.</p>
+<h2>The derivative as a compass</h2>
+<p>A derivative measures how a small change in input changes the output. If a model's error is a landscape of hills and valleys, the derivative at your current position tells you the slope. Walk downhill and the error shrinks.</p>
+<h2>Gradients and gradient descent</h2>
+<p>A model has millions of adjustable numbers (parameters), so we need a slope in millions of directions at once: that is the <strong>gradient</strong>. <strong>Gradient descent</strong> is the training loop of nearly all deep learning: compute the error, compute the gradient of the error with respect to every parameter, nudge every parameter a tiny step downhill, repeat.</p>
+<p>The size of the nudge is the <strong>learning rate</strong>: too large and you overshoot the valley, too small and training takes forever. Tuning it is one of the practitioner's first skills.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Derivatives measure sensitivity; gradients do it in millions of dimensions.</li>
+<li>Gradient descent = repeatedly stepping downhill on the error landscape.</li>
+<li>The learning rate controls step size and makes or breaks training.</li></ul></div>`},
+  {id:"probability", title:"Probability and Statistics", body:`
+<p>Models live in an uncertain world, and probability is the mathematics of uncertainty.</p>
+<h2>Distributions and expectation</h2>
+<p>A <strong>probability distribution</strong> assigns likelihoods to outcomes. The normal (bell curve) distribution appears everywhere because sums of many small random effects tend toward it. The <strong>expected value</strong> is the long-run average, and <strong>variance</strong> measures spread.</p>
+<h2>Bayes' theorem</h2>
+<p>Bayes' theorem tells you how to update beliefs given evidence: the probability of a hypothesis given data depends on how likely that data would be if the hypothesis were true, weighted by how plausible the hypothesis was to begin with. Spam filters, medical diagnosis models, and much of modern AI reasoning rest on this single line of math.</p>
+<h2>Why models output probabilities</h2>
+<p>A classifier rarely says "cat"; it says "92% cat, 7% dog, 1% raccoon." Training often maximizes the probability the model assigns to the correct answers, a principle called <strong>maximum likelihood</strong>. Language models do exactly this: they output a probability for every possible next word.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Distributions describe uncertainty; expectation and variance summarize them.</li>
+<li>Bayes' theorem is the recipe for updating beliefs with evidence.</li>
+<li>Models are trained to assign high probability to correct answers.</li></ul></div>`}
+ ]}
+],
+quiz:[
+ {q:"A single neural network layer is essentially…",opts:["A database lookup","A matrix multiplication plus a nonlinearity","A sorting algorithm","A random number generator"],a:1},
+ {q:"Gradient descent works by…",opts:["Randomly guessing parameters","Stepping parameters downhill along the error gradient","Increasing the error each step","Memorizing the training data"],a:1},
+ {q:"Bayes' theorem describes how to…",opts:["Multiply matrices","Update beliefs given new evidence","Choose a learning rate","Compress images"],a:1}
+]},
+
+{
+id:"machine-learning", title:"Machine Learning", level:2, facet:"Core",
+desc:"Supervised and unsupervised learning, model evaluation, and the eternal battle against overfitting.",
+modules:[
+ {title:"Learning from Data", lessons:[
+  {id:"supervised", title:"Supervised Learning", body:`
+<p>Supervised learning is learning from labeled examples: inputs paired with the answers we want. It powers most production ML.</p>
+<h2>Regression and classification</h2>
+<p><strong>Regression</strong> predicts a number: house prices, tomorrow's temperature, delivery time. <strong>Classification</strong> predicts a category: spam or not, which digit, which disease. The same core recipe covers both: choose a model family, define a loss function measuring wrongness, and minimize it on training data.</p>
+<h2>The classic model zoo</h2>
+<ul>
+<li><strong>Linear and logistic regression:</strong> draw the best line (or boundary). Simple, fast, interpretable.</li>
+<li><strong>Decision trees:</strong> a flowchart of if-then splits learned from data.</li>
+<li><strong>Random forests and gradient boosting:</strong> hundreds of trees voting together; still the champions on tabular business data.</li>
+<li><strong>k-nearest neighbors:</strong> classify a point by looking at its closest labeled neighbors.</li>
+<li><strong>Support vector machines:</strong> find the boundary with the widest margin between classes.</li>
+</ul>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Supervised learning = labeled inputs → predicted outputs.</li>
+<li>Regression predicts numbers; classification predicts categories.</li>
+<li>Tree ensembles still dominate tabular data; deep learning dominates perception.</li></ul></div>`},
+  {id:"unsupervised", title:"Unsupervised Learning", body:`
+<p>Unsupervised learning finds structure in data with no labels at all: no answers, just raw observations.</p>
+<h2>Clustering</h2>
+<p><strong>Clustering</strong> groups similar items: customer segments, topics in documents, cell types in biology. The classic algorithm, <strong>k-means</strong>, alternates between assigning points to the nearest cluster center and moving each center to the average of its points.</p>
+<h2>Dimensionality reduction</h2>
+<p>Real data often has hundreds of measurements per item, most of them redundant. <strong>PCA (principal component analysis)</strong> finds the few directions along which the data varies most, compressing it while keeping its shape. Techniques like t-SNE and UMAP go further, producing 2-D maps of high-dimensional data that reveal hidden clusters visually.</p>
+<h2>Self-supervised learning</h2>
+<p>The modern superstar: create labels from the data itself. Hide a word and predict it; hide an image patch and reconstruct it. This is how large language models learn from raw internet text: no human labeling required, which is what makes their scale possible.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Clustering groups similar items without labels.</li>
+<li>Dimensionality reduction compresses data while preserving structure.</li>
+<li>Self-supervised learning manufactures its own labels, enabling LLM-scale training.</li></ul></div>`},
+  {id:"evaluation", title:"Evaluating Models Honestly", body:`
+<p>A model that looks brilliant on data it has already seen may be useless in the wild. Evaluation is the discipline of finding out the truth before your users do.</p>
+<h2>Train, validation, test</h2>
+<p>Split your data three ways. <strong>Train</strong> on the first split, tune choices on the <strong>validation</strong> split, and touch the <strong>test</strong> split exactly once at the end for an unbiased final score. Peeking at the test set during development is the cardinal sin of ML.</p>
+<h2>Choosing the right metric</h2>
+<p>Accuracy misleads on imbalanced data: a fraud detector that says "no fraud" every time is 99.9% accurate and 100% useless. Learn the vocabulary: <strong>precision</strong> (of flagged items, how many were truly positive), <strong>recall</strong> (of true positives, how many we caught), <strong>F1</strong> (their balance), and <strong>ROC-AUC</strong> (ranking quality across thresholds). For regression: mean absolute error and root mean squared error.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Never evaluate on data the model trained on; guard the test set.</li>
+<li>Accuracy lies when classes are imbalanced.</li>
+<li>Precision and recall trade off; pick the metric that matches the real cost of errors.</li></ul></div>`},
+  {id:"overfitting", title:"Overfitting and Regularization", body:`
+<p>Overfitting is memorizing the training data instead of learning the pattern: the model aces practice and fails the exam.</p>
+<h2>Diagnosing it</h2>
+<p>The signature is a gap: training error keeps falling while validation error stalls or rises. The opposite failure, <strong>underfitting</strong>, is a model too simple to capture the pattern at all: both errors stay high.</p>
+<h2>The regularization toolbox</h2>
+<ul>
+<li><strong>More data:</strong> the most reliable cure, including augmented data (flipped images, paraphrased text).</li>
+<li><strong>L1/L2 penalties:</strong> punish large weights, keeping the model simple.</li>
+<li><strong>Dropout:</strong> randomly silence neurons during training so no single pathway is relied on.</li>
+<li><strong>Early stopping:</strong> stop training when validation error stops improving.</li>
+</ul>
+<p>The deeper principle is the <strong>bias-variance tradeoff</strong>: simple models are consistently wrong (bias), complex models are erratically wrong (variance). Regularization lets you slide along that dial to the sweet spot.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Overfitting = memorization; watch the train/validation gap.</li>
+<li>Regularization constrains models toward simpler solutions.</li>
+<li>Bias vs. variance is the fundamental tension in all of ML.</li></ul></div>`}
+ ]}
+],
+quiz:[
+ {q:"Which task is regression?",opts:["Spam vs. not spam","Predicting a house's sale price","Grouping customers","Detecting objects in images"],a:1},
+ {q:"How do large language models learn from raw text without human labels?",opts:["Clustering","Self-supervised learning (predicting hidden words)","k-nearest neighbors","Manual rules"],a:1},
+ {q:"Training error falls while validation error rises. This is…",opts:["Underfitting","Perfect fit","Overfitting","A metric bug"],a:2},
+ {q:"Why can accuracy mislead?",opts:["It is hard to compute","It ignores class imbalance","It only works for regression","It requires labels"],a:1}
+]},
+
+{
+id:"deep-learning", title:"Deep Learning", level:3, facet:"Core",
+desc:"Neural networks from a single neuron to CNNs and attention: the engine of the modern AI era.",
+modules:[
+ {title:"Neural Networks", lessons:[
+  {id:"neural-nets", title:"How Neural Networks Work", body:`
+<p>A neural network is a stack of simple functions that, layered together, can approximate almost any relationship between inputs and outputs.</p>
+<h2>The neuron</h2>
+<p>One artificial neuron takes inputs, multiplies each by a learned <strong>weight</strong>, adds a <strong>bias</strong>, and passes the sum through an <strong>activation function</strong> like ReLU (which outputs the value if positive, else zero). Without activations the whole network would collapse into one linear equation; the nonlinearity is what buys expressive power.</p>
+<h2>Layers and depth</h2>
+<p>Neurons are arranged in layers: an input layer (your data), hidden layers (learned features), and an output layer (the prediction). Early layers learn simple features (edges in images, word fragments in text); deeper layers compose them into abstractions (faces, grammar, meaning). "Deep" learning simply means many layers.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Neuron = weighted sum + bias + nonlinear activation.</li>
+<li>Depth builds abstraction: edges → shapes → objects.</li>
+<li>Nonlinearity is what separates deep nets from plain linear models.</li></ul></div>`},
+  {id:"backprop", title:"Training: Backpropagation", body:`
+<p>Backpropagation is the algorithm that made deep learning practical: an efficient way to compute the gradient of the error with respect to every weight in the network.</p>
+<h2>The forward and backward pass</h2>
+<p>In the <strong>forward pass</strong>, data flows through the network and produces a prediction; a <strong>loss function</strong> scores how wrong it is. In the <strong>backward pass</strong>, the chain rule of calculus propagates blame backward layer by layer: each weight learns exactly how much it contributed to the error. Then gradient descent nudges every weight accordingly.</p>
+<h2>What can go wrong</h2>
+<p><strong>Vanishing gradients</strong>: in very deep nets, gradients can shrink to nothing before reaching early layers. Fixes include ReLU activations, careful initialization, <strong>batch normalization</strong>, and <strong>residual (skip) connections</strong>, which give gradients a highway past layers. Residual connections (ResNet, 2015) are why we can now train networks hundreds of layers deep.</p>
+<p>In practice we use <strong>mini-batch</strong> gradient descent with optimizers like <strong>Adam</strong>, which adapts the learning rate per parameter and is the sensible default in most projects.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Backprop = chain rule assigning blame to every weight.</li>
+<li>Residual connections and batch norm tamed very deep networks.</li>
+<li>Adam is the default optimizer for most work.</li></ul></div>`},
+  {id:"cnns", title:"Convolutional Networks (CNNs)", body:`
+<p>CNNs are neural networks specialized for grids: images, video frames, spectrograms. They ruled computer vision for a decade and still power most edge deployments.</p>
+<h2>The convolution idea</h2>
+<p>Instead of connecting every pixel to every neuron, a CNN slides a small <strong>filter</strong> (say 3×3 weights) across the image, computing dot products at each position. The same filter reused everywhere means far fewer parameters and built-in <strong>translation invariance</strong>: a cat detector works wherever the cat sits in the frame.</p>
+<h2>The classic pipeline</h2>
+<p>Stacks of convolution + activation layers extract features; <strong>pooling</strong> layers downsample; fully connected layers at the end make the decision. Landmark architectures: LeNet (1998, digits), AlexNet (2012), VGG, ResNet (2015), and efficient mobile families like MobileNet and EfficientNet designed for phones and embedded boards.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Convolutions share small filters across the image: efficient and translation-invariant.</li>
+<li>Feature maps grow abstract with depth: edges → textures → objects.</li>
+<li>MobileNet-style architectures bring CNNs to edge devices.</li></ul></div>`},
+  {id:"attention", title:"Sequences and Attention", body:`
+<p>Language, audio, and sensor streams are sequences, and sequences need memory of context. This lesson traces the road to the mechanism that changed everything.</p>
+<h2>RNNs and their limits</h2>
+<p><strong>Recurrent neural networks</strong> process a sequence one step at a time, carrying a hidden state as memory. <strong>LSTM</strong> and <strong>GRU</strong> cells added gates to remember longer, but RNNs still struggled with long-range dependencies and could not be parallelized: each step waits for the previous one.</p>
+<h2>Attention</h2>
+<p><strong>Attention</strong> lets every position in a sequence look directly at every other position and decide what matters. Translating "the animal didn't cross the street because it was too tired," the model attends from "it" straight to "animal." No relay race through hidden states: direct connections, fully parallelizable on GPUs.</p>
+<p>The 2017 paper "Attention Is All You Need" removed recurrence entirely, building the <strong>transformer</strong> from attention alone. It is the subject of the NLP course and the backbone of virtually all frontier AI.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>RNNs process sequences step by step and struggle with long context.</li>
+<li>Attention connects every position to every other, in parallel.</li>
+<li>Transformers = attention without recurrence; the modern backbone.</li></ul></div>`}
+ ]}
+],
+quiz:[
+ {q:"What gives neural networks their expressive power beyond linear models?",opts:["More RAM","Nonlinear activation functions","Bigger datasets only","Random seeds"],a:1},
+ {q:"Backpropagation uses which mathematical tool to assign blame to weights?",opts:["The chain rule","Bayes' theorem","Fourier transforms","Prime factorization"],a:0},
+ {q:"Why are convolutions efficient for images?",opts:["They use no math","Filters are shared across positions","They skip training","They only work on small images"],a:1},
+ {q:"The transformer's core innovation is…",opts:["Deeper pooling","Attention replacing recurrence","Bigger filters","Analog computing"],a:1}
+]},
+
+{
+id:"nlp", title:"Natural Language Processing", level:3, facet:"Language",
+desc:"From words-as-numbers to transformers and the large language models reshaping how we work.",
+modules:[
+ {title:"Language and Machines", lessons:[
+  {id:"embeddings", title:"Turning Words into Numbers", body:`
+<p>Models compute with numbers, so NLP's first job is representing text numerically without losing meaning.</p>
+<h2>Tokens</h2>
+<p>Text is split into <strong>tokens</strong>: not quite words, not quite characters. Modern tokenizers (like byte-pair encoding) learn frequent chunks, so "unbelievable" might become "un + believ + able." A typical English word is roughly 1.3 tokens.</p>
+<h2>Embeddings</h2>
+<p>Each token maps to an <strong>embedding</strong>: a vector of a few hundred to a few thousand numbers positioned so that similar meanings sit near each other. Word2Vec (2013) revealed that these spaces encode analogy: the vector arithmetic king − man + woman lands near queen. Modern models learn <strong>contextual</strong> embeddings, so "bank" by the river and "bank" with your money get different vectors.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Tokenization chops text into learnable chunks.</li>
+<li>Embeddings place meaning in geometric space: similarity = closeness.</li>
+<li>Context-aware embeddings resolve ambiguity.</li></ul></div>`},
+  {id:"transformers", title:"Transformers, Properly", body:`
+<p>The transformer is the architecture behind GPT, Claude, Gemini, BERT, and nearly every frontier model. Understanding it once demystifies the entire modern landscape.</p>
+<h2>Self-attention in three steps</h2>
+<p>Each token produces three vectors: a <strong>query</strong> (what am I looking for?), a <strong>key</strong> (what do I contain?), and a <strong>value</strong> (what do I contribute?). Attention scores = each query dotted with every key, softmaxed into weights, then used to blend the values. Every token thus builds a context-aware version of itself. <strong>Multi-head</strong> attention runs this several times in parallel, each head learning a different kind of relationship (syntax, coreference, position).</p>
+<h2>The full block</h2>
+<p>A transformer layer = multi-head attention → residual connection and normalization → a small feed-forward network → another residual. Stack dozens of these layers, add positional information so order matters, and you have the architecture. Decoder-style models (GPT family) mask attention so each token sees only its past, which is what makes next-token generation possible.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Query·Key scores decide attention; Values carry the content.</li>
+<li>Multiple heads capture multiple relationship types at once.</li>
+<li>Decoder masking turns transformers into text generators.</li></ul></div>`},
+  {id:"llms", title:"Large Language Models", body:`
+<p>A large language model is a transformer trained on vast text to do one deceptively simple thing: predict the next token. Everything else emerges from that.</p>
+<h2>The training pipeline</h2>
+<ol>
+<li><strong>Pretraining:</strong> next-token prediction on trillions of tokens of text and code. This is where knowledge and reasoning patterns form.</li>
+<li><strong>Instruction tuning:</strong> fine-tuning on examples of following instructions well.</li>
+<li><strong>Alignment (RLHF and successors):</strong> humans rank outputs; the model is optimized toward helpful, honest, harmless behavior.</li>
+</ol>
+<h2>Scaling and emergence</h2>
+<p>Performance improves smoothly with more parameters, data, and compute (scaling laws), and some abilities appear only past certain scales. But LLMs also <strong>hallucinate</strong>: they generate fluent text that is confidently wrong, because they model plausibility, not truth. Retrieval, tool use, and citation grounding are the working countermeasures.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>LLM = transformer + next-token prediction at enormous scale.</li>
+<li>Pretrain → instruct → align is the standard pipeline.</li>
+<li>Hallucination is inherent to plausibility modeling; grounding mitigates it.</li></ul></div>`}
+ ]}
+],
+quiz:[
+ {q:"In self-attention, attention weights come from…",opts:["Value·Value products","Query·Key dot products","Random sampling","Pooling layers"],a:1},
+ {q:"An LLM's pretraining objective is…",opts:["Image classification","Predicting the next token","Sorting documents","Playing games"],a:1},
+ {q:"Why do LLMs hallucinate?",opts:["Faulty GPUs","They model plausibility, not truth","Too little RAM","Tokenizer bugs"],a:1}
+]},
+
+{
+id:"computer-vision", title:"Computer Vision", level:3, facet:"Vision",
+desc:"Classification, detection, segmentation, and squeezing vision models onto edge devices.",
+modules:[
+ {title:"Machines that See", lessons:[
+  {id:"image-basics", title:"Images as Data", body:`
+<p>To a model, an image is a tensor: height × width × 3 color channels of pixel intensities. Vision is the art of turning that grid into understanding.</p>
+<h2>The task hierarchy</h2>
+<ul>
+<li><strong>Classification:</strong> what is in this image? One label per image.</li>
+<li><strong>Object detection:</strong> what is where? Boxes + labels for every object.</li>
+<li><strong>Semantic segmentation:</strong> label every pixel by class (road, car, sky).</li>
+<li><strong>Instance segmentation:</strong> separate masks per object, even of the same class.</li>
+<li><strong>Pose estimation, tracking, depth:</strong> skeletons, motion across frames, 3-D structure.</li>
+</ul>
+<h2>Data is the battle</h2>
+<p>Vision models are data-hungry, and <strong>augmentation</strong> (flips, crops, color jitter, rotations) multiplies your dataset for free while teaching invariance. <strong>Transfer learning</strong> is the practical standard: start from a model pretrained on millions of images and fine-tune on your few thousand.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Images are H×W×3 tensors; tasks range from one label to per-pixel maps.</li>
+<li>Augmentation and transfer learning are the practitioner's daily tools.</li></ul></div>`},
+  {id:"detection", title:"Detection and Segmentation", body:`
+<p>Detection is where vision meets the real world: autonomous driving, retail analytics, medical imaging, robotics.</p>
+<h2>Two philosophies</h2>
+<p><strong>Two-stage</strong> detectors (the R-CNN family) first propose regions likely to contain objects, then classify each: accurate but slower. <strong>One-stage</strong> detectors (<strong>YOLO</strong>, SSD) predict boxes and classes in a single pass over the image: fast enough for real-time video, which is why the YOLO family dominates deployed systems.</p>
+<h2>Segmentation and the transformer wave</h2>
+<p>Segmentation architectures like <strong>U-Net</strong> (an encoder-decoder with skip connections, beloved in medical imaging) produce per-pixel maps. Meanwhile <strong>vision transformers (ViT)</strong> treat image patches as tokens and now match or beat CNNs at scale, and promptable models like Segment Anything can mask arbitrary objects from a click.</p>
+<h2>Metrics</h2>
+<p>Detection quality is measured by <strong>IoU</strong> (intersection-over-union of predicted vs. true boxes) and <strong>mAP</strong> (mean average precision across classes and thresholds). Know them: every paper and benchmark speaks this language.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>One-stage detectors (YOLO) trade a little accuracy for real-time speed.</li>
+<li>U-Net rules medical segmentation; ViTs lead at large scale.</li>
+<li>IoU and mAP are the vocabulary of detection evaluation.</li></ul></div>`},
+  {id:"edge-vision", title:"Vision at the Edge", body:`
+<p>Many vision systems cannot phone home to a data center: drones, cameras, robots, and phones need inference on-device, within tight power and latency budgets.</p>
+<h2>Making models small and fast</h2>
+<ul>
+<li><strong>Quantization:</strong> store weights in 8-bit integers (or lower) instead of 32-bit floats: 4× smaller, much faster, tiny accuracy cost.</li>
+<li><strong>Pruning:</strong> remove weights and channels that contribute little.</li>
+<li><strong>Knowledge distillation:</strong> train a small "student" model to mimic a large "teacher."</li>
+<li><strong>Efficient architectures:</strong> MobileNet, EfficientNet-Lite, YOLO-nano variants designed for edge silicon.</li>
+</ul>
+<h2>The deployment toolchain</h2>
+<p>The standard route: train in PyTorch or TensorFlow → export to <strong>ONNX</strong> (an open interchange format) → compile with a runtime optimized for the target: <strong>TensorRT</strong> on NVIDIA Jetson, Core ML on Apple, TFLite on Android and microcontrollers. Measure latency, throughput, and watts on the actual device: the benchmark that matters is the one in the field.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Quantization, pruning, and distillation shrink models for the edge.</li>
+<li>Train → ONNX → device-specific runtime is the standard pipeline.</li>
+<li>Benchmark on the real device, not the dev machine.</li></ul></div>`}
+ ]}
+],
+quiz:[
+ {q:"Labeling every pixel of an image by class is called…",opts:["Classification","Object detection","Semantic segmentation","Pose estimation"],a:2},
+ {q:"Why do deployed real-time systems favor YOLO-style detectors?",opts:["Highest possible accuracy","Single-pass speed","They need no training","They only run in the cloud"],a:1},
+ {q:"Quantization makes models faster by…",opts:["Adding layers","Using lower-precision numbers like INT8","Increasing image size","Removing the dataset"],a:1}
+]},
+
+{
+id:"generative-ai", title:"Generative AI", level:4, facet:"Frontier",
+desc:"Diffusion, prompting, retrieval-augmented generation, and fine-tuning: creating with models.",
+modules:[
+ {title:"Machines that Create", lessons:[
+  {id:"gen-models", title:"The Generative Family", body:`
+<p>Generative models learn the distribution of their training data well enough to sample new examples from it: new images, new sentences, new molecules.</p>
+<h2>The lineage</h2>
+<ul>
+<li><strong>Autoencoders and VAEs:</strong> compress data to a latent code and reconstruct it; sample the latent space to generate.</li>
+<li><strong>GANs (2014):</strong> a generator forges samples while a discriminator plays detective; their duel sharpens both. GANs produced the first photorealistic fake faces.</li>
+<li><strong>Autoregressive models:</strong> generate one piece at a time, each conditioned on what came before: this is how LLMs write.</li>
+<li><strong>Diffusion models:</strong> the current image/video champions, covered next.</li>
+</ul>
+<p>Each family trades off sample quality, diversity, training stability, and speed. GANs are fast but unstable to train; diffusion is stable and superb but slower to sample.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Generative models learn distributions and sample new data from them.</li>
+<li>GANs = adversarial duel; autoregressive = one token at a time.</li>
+<li>Diffusion currently leads image and video generation.</li></ul></div>`},
+  {id:"diffusion", title:"Diffusion Models", body:`
+<p>Diffusion models generate images by learning to reverse the destruction of them.</p>
+<h2>Noise forward, denoise backward</h2>
+<p>Training: take a real image and add Gaussian noise step by step until it is pure static, and teach a network to predict the noise at each step. Generation: start from pure static and apply the learned denoiser repeatedly: an image crystallizes out of randomness, like a photograph developing.</p>
+<h2>Text guidance and latent diffusion</h2>
+<p>Conditioning the denoiser on a text embedding steers generation ("a lighthouse in a thunderstorm, oil painting"), with classifier-free guidance controlling how strictly the prompt is obeyed. <strong>Latent diffusion</strong> (the trick behind Stable Diffusion) runs the whole process in a compressed latent space instead of raw pixels, cutting compute enormously: it is why image generation runs on consumer GPUs. The same machinery, extended through time, powers modern video generation.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Diffusion = learn to denoise; generate by denoising pure noise.</li>
+<li>Text embeddings steer the process; guidance scales control adherence.</li>
+<li>Latent diffusion made generation affordable.</li></ul></div>`},
+  {id:"prompting-rag", title:"Prompting and RAG", body:`
+<p>You do not need to train a model to shape its behavior: the prompt is a programming interface.</p>
+<h2>Prompting techniques that work</h2>
+<ul>
+<li><strong>Be explicit:</strong> role, task, constraints, output format, and examples (few-shot) beat vague requests.</li>
+<li><strong>Chain-of-thought:</strong> asking the model to reason step by step measurably improves multi-step problems.</li>
+<li><strong>Structure:</strong> delimiters and XML-style tags keep instructions and data cleanly separated.</li>
+</ul>
+<h2>Retrieval-augmented generation (RAG)</h2>
+<p>LLMs have a knowledge cutoff and no access to your private documents. RAG fixes both: chunk your documents, embed each chunk into vectors, store them in a <strong>vector database</strong>; at question time, embed the query, retrieve the most similar chunks, and paste them into the prompt as context. The model answers grounded in your data, with citations, and updating knowledge means updating the index, not retraining the model.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Explicit structure + examples + step-by-step reasoning = better prompts.</li>
+<li>RAG = embed, retrieve, stuff context: grounded answers from your own data.</li>
+<li>Update the index, not the model.</li></ul></div>`},
+  {id:"finetuning", title:"Fine-tuning and Adaptation", body:`
+<p>When prompting is not enough: consistent style, domain vocabulary, or a specialized task, you adapt the model itself.</p>
+<h2>The adaptation ladder</h2>
+<ol>
+<li><strong>Prompt engineering:</strong> free, instant, try first.</li>
+<li><strong>RAG:</strong> when the gap is knowledge, not behavior.</li>
+<li><strong>Parameter-efficient fine-tuning (PEFT):</strong> when the gap is behavior. <strong>LoRA</strong> freezes the base model and trains tiny low-rank adapter matrices: often under 1% of parameters, trainable on a single GPU. <strong>QLoRA</strong> does it on a quantized base, cheaper still.</li>
+<li><strong>Full fine-tuning:</strong> retrain everything: costly, data-hungry, and risks catastrophic forgetting; reserved for serious teams with serious datasets.</li>
+</ol>
+<p>Golden rule: data quality beats data quantity. A thousand excellent examples routinely outperform a hundred thousand mediocre ones.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Climb the ladder: prompt → RAG → LoRA → full fine-tune.</li>
+<li>LoRA adapts giants by training tiny adapter matrices.</li>
+<li>Curated data quality is the decisive factor.</li></ul></div>`}
+ ]}
+],
+quiz:[
+ {q:"A diffusion model generates images by…",opts:["Copying training images","Iteratively denoising random noise","Sorting pixels","Compiling shaders"],a:1},
+ {q:"RAG improves answers by…",opts:["Retraining the model nightly","Retrieving relevant documents into the prompt","Increasing temperature","Removing the tokenizer"],a:1},
+ {q:"LoRA fine-tunes efficiently by…",opts:["Training small adapter matrices on a frozen base","Deleting layers","Doubling parameters","Using no data"],a:0}
+]},
+
+{
+id:"reinforcement", title:"Reinforcement Learning", level:4, facet:"Frontier",
+desc:"Agents, rewards, Q-learning, policy gradients, and how RL aligns the models you talk to.",
+modules:[
+ {title:"Learning by Doing", lessons:[
+  {id:"rl-framework", title:"The RL Framework", body:`
+<p>Reinforcement learning is learning from consequences: an <strong>agent</strong> acts in an <strong>environment</strong>, receives <strong>rewards</strong>, and improves its <strong>policy</strong> (its strategy for choosing actions) to maximize long-run reward.</p>
+<h2>The loop and the language</h2>
+<p>At each step the agent observes a <strong>state</strong>, takes an <strong>action</strong>, and gets a reward and a new state: formalized as a Markov decision process. A <strong>value function</strong> estimates how good a state is; a <strong>discount factor</strong> makes near-term reward worth more than distant reward.</p>
+<h2>Exploration vs. exploitation</h2>
+<p>The signature dilemma: keep choosing the best-known action (exploit) or try something new that might be better (explore)? Every RL algorithm embodies some answer, from simple ε-greedy randomness to curiosity-driven bonuses. Too little exploration gets stuck; too much never settles.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Agent, environment, state, action, reward, policy: learn the vocabulary.</li>
+<li>Value functions estimate long-run reward from a state.</li>
+<li>Exploration vs. exploitation is RL's defining tension.</li></ul></div>`},
+  {id:"q-learning", title:"Value Methods and Deep Q-Networks", body:`
+<p><strong>Q-learning</strong> learns a table of Q-values: the expected long-run reward of taking action a in state s. Acting greedily on an accurate Q-table is optimal play.</p>
+<h2>The update</h2>
+<p>After each experience, nudge Q(s, a) toward: reward received + discounted best Q-value of the next state. Repeat enough and the table converges: no model of the environment needed.</p>
+<h2>Going deep</h2>
+<p>Real problems have far too many states for a table, so <strong>DQN</strong> (DeepMind, 2013–2015) replaced the table with a neural network and learned to play Atari games from raw pixels, sparking the deep RL era. Two stabilizing tricks made it work: <strong>experience replay</strong> (train on shuffled past experiences to break correlation) and a <strong>target network</strong> (a frozen copy providing stable learning targets).</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Q-values score state-action pairs; greedy play on true Q-values is optimal.</li>
+<li>DQN = Q-learning with a neural network, replay buffer, and target network.</li>
+<li>Atari-from-pixels was deep RL's proof of concept.</li></ul></div>`},
+  {id:"policy-rlhf", title:"Policy Gradients and RLHF", body:`
+<p>Instead of learning values and deriving actions, <strong>policy gradient</strong> methods optimize the policy directly: increase the probability of actions that led to high reward.</p>
+<h2>PPO and friends</h2>
+<p>Raw policy gradients are noisy and unstable, so practical algorithms constrain each update. <strong>PPO (proximal policy optimization)</strong> clips updates so the new policy never strays too far from the old one per step: simple, robust, and the workhorse of applied RL, from robot locomotion to game agents. AlphaGo combined policy and value networks with tree search to defeat the world's best Go players.</p>
+<h2>RLHF: RL meets language models</h2>
+<p><strong>Reinforcement learning from human feedback</strong> is how chat models learn to be helpful. Humans rank pairs of model responses; a <strong>reward model</strong> is trained to predict those preferences; then the language model is optimized (classically with PPO) to maximize that learned reward, with a penalty for drifting too far from the original model. Newer variants like DPO reach similar ends more directly. Either way, the assistant you are talking to was shaped by this family of techniques.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Policy gradients reinforce actions in proportion to their reward.</li>
+<li>PPO's clipped updates make deep RL stable enough for production.</li>
+<li>RLHF turns human preferences into a reward signal for LLMs.</li></ul></div>`}
+ ]}
+],
+quiz:[
+ {q:"The exploration/exploitation dilemma asks whether to…",opts:["Use more GPUs","Try new actions vs. repeat the best-known one","Train longer","Add more layers"],a:1},
+ {q:"DQN stabilized deep Q-learning using…",opts:["Bigger images","Experience replay and a target network","No rewards","Manual rules"],a:1},
+ {q:"In RLHF, the reward model is trained on…",opts:["Stock prices","Human preference rankings of responses","Random noise","Game scores"],a:1}
+]},
+
+{
+id:"mlops", title:"MLOps & Edge Deployment", level:5, facet:"Practice",
+desc:"From notebook to production: serving, monitoring, and running AI on real hardware in the real world.",
+modules:[
+ {title:"Shipping Intelligence", lessons:[
+  {id:"to-production", title:"From Notebook to Production", body:`
+<p>A model in a notebook is a science project; a model serving users reliably is a product. MLOps is the engineering discipline that bridges the two.</p>
+<h2>The production checklist</h2>
+<ul>
+<li><strong>Reproducibility:</strong> version code (git), data, and models together so any result can be rebuilt.</li>
+<li><strong>Packaging:</strong> containerize with Docker so the model runs identically everywhere.</li>
+<li><strong>Serving:</strong> wrap the model in an API (FastAPI is the Python standard) or use a dedicated server like Triton; scale with Kubernetes when traffic demands.</li>
+<li><strong>CI/CD for ML:</strong> automated tests for data schemas, model quality thresholds, and latency budgets before anything deploys.</li>
+</ul>
+<h2>Latency vs. throughput</h2>
+<p>Interactive apps need low <strong>latency</strong> per request; batch pipelines need high <strong>throughput</strong>. Batching requests, quantization, and GPU scheduling trade between the two. Decide the budget first, then choose hardware and optimizations to hit it.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Version everything: code, data, and model as one unit.</li>
+<li>Docker + an API layer is the minimum viable deployment.</li>
+<li>Design to an explicit latency or throughput budget.</li></ul></div>`},
+  {id:"monitoring", title:"Monitoring and Drift", body:`
+<p>Models decay silently. The world changes, the training data becomes stale, and accuracy erodes without a single error in the logs.</p>
+<h2>Two kinds of drift</h2>
+<p><strong>Data drift:</strong> the inputs change distribution (new slang, new camera angles, a new customer segment). <strong>Concept drift:</strong> the relationship between inputs and the right answer changes (fraud tactics evolve). Both demand monitoring of input statistics and, where labels arrive later, live accuracy tracking.</p>
+<h2>The feedback loop</h2>
+<p>Mature systems close the loop: log predictions → collect ground truth → detect degradation → retrain on fresh data → validate → redeploy, ideally behind a <strong>shadow deployment</strong> or canary release so a bad model never meets all your users at once. Track model versions and enable one-click rollback: the day you need it, you will need it fast.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Data drift and concept drift silently erode accuracy.</li>
+<li>Monitor inputs, outputs, and delayed ground truth.</li>
+<li>Canary releases and rollbacks make retraining safe.</li></ul></div>`},
+  {id:"edge-deploy", title:"AI on the Edge", body:`
+<p>Edge AI runs models on the device itself: robots, cameras, vehicles, phones, microcontrollers. The rewards are privacy, low latency, and independence from connectivity; the price is working within watts and megabytes.</p>
+<h2>The hardware landscape</h2>
+<ul>
+<li><strong>NVIDIA Jetson family:</strong> GPU-accelerated modules for robotics and vision; TensorRT compiles models to squeeze out maximum speed.</li>
+<li><strong>Phones:</strong> Apple Neural Engine and Android NNAPI run quantized models on dedicated silicon.</li>
+<li><strong>Microcontrollers (TinyML):</strong> keyword spotting and sensor models in kilobytes, running for months on a battery.</li>
+</ul>
+<h2>The edge workflow</h2>
+<p>Profile the target device first. Then: pick an efficient architecture → train → quantize (INT8 or lower, with calibration data) → export to ONNX or TFLite → compile with the device runtime → benchmark on-device for latency, memory, and power → iterate. In robotics, frameworks like ROS 2 tie perception models into the control loop with real-time constraints.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Edge = privacy + latency + offline operation, under tight budgets.</li>
+<li>Quantize, compile with the device runtime, benchmark on-device.</li>
+<li>ROS 2 integrates perception into real-time robot control.</li></ul></div>`}
+ ]}
+],
+quiz:[
+ {q:"Concept drift means…",opts:["The server crashed","The input-to-answer relationship changed over time","The model file is corrupt","GPUs got slower"],a:1},
+ {q:"A canary release…",opts:["Deploys to all users instantly","Exposes a new model to a small slice of traffic first","Deletes old logs","Skips testing"],a:1},
+ {q:"Standard edge optimization before deployment includes…",opts:["Adding parameters","INT8 quantization and runtime compilation","Removing the model","Raising image resolution"],a:1}
+]},
+
+{
+id:"ethics", title:"AI Ethics & Safety", level:5, facet:"Society",
+desc:"Bias, fairness, alignment, and governance: building AI that deserves to be trusted.",
+modules:[
+ {title:"Responsible Intelligence", lessons:[
+  {id:"bias", title:"Bias and Fairness", body:`
+<p>Models learn from human-generated data, and human data carries human bias. Left unexamined, AI does not remove prejudice: it automates it at scale.</p>
+<h2>Where bias enters</h2>
+<ul>
+<li><strong>Data:</strong> under-represented groups, historical discrimination baked into labels (past hiring decisions, past policing patterns).</li>
+<li><strong>Measurement:</strong> proxies that correlate with protected attributes (zip code standing in for race).</li>
+<li><strong>Deployment:</strong> a model accurate on average but much worse for specific subgroups.</li>
+</ul>
+<h2>Measuring and mitigating</h2>
+<p>Fairness has competing formal definitions: demographic parity (equal positive rates across groups), equalized odds (equal error rates across groups), calibration (scores mean the same thing for everyone). Mathematically, you generally cannot satisfy all at once, so teams must choose deliberately and document the choice. Mitigations span the pipeline: rebalancing data, constraint-aware training, subgroup evaluation dashboards, and human review for high-stakes calls.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Bias enters through data, proxies, and unequal subgroup performance.</li>
+<li>Fairness definitions conflict; choosing one is a documented decision.</li>
+<li>Audit per subgroup, not just on average.</li></ul></div>`},
+  {id:"alignment", title:"Alignment and Safety", body:`
+<p>Alignment is the problem of making AI systems reliably do what humans actually intend, not merely what we literally specified.</p>
+<h2>Why it is hard</h2>
+<p><strong>Specification gaming:</strong> optimize a proxy hard enough and the proxy breaks: a boat-racing agent rewarded for points learns to spin in circles collecting them, never finishing the race. <strong>Goodhart's law</strong> in action: when a measure becomes a target, it ceases to be a good measure. As systems grow more capable and autonomous, the gap between "what we said" and "what we meant" grows more consequential.</p>
+<h2>The working toolbox</h2>
+<p>Today's practice includes RLHF and constitutional AI (training models against written principles), red-teaming (adversarially probing for failures before release), interpretability research (opening the black box to see what models actually compute), and evaluations for dangerous capabilities. Robustness matters too: models must withstand adversarial inputs, prompt injection, and distribution shift without failing dangerously.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Alignment = intended behavior, not just specified behavior.</li>
+<li>Specification gaming shows how optimizers exploit imperfect objectives.</li>
+<li>RLHF, red-teaming, and interpretability are today's safety toolkit.</li></ul></div>`},
+  {id:"governance", title:"Governance and the Human Future", body:`
+<p>Technical fixes alone cannot answer questions about power, accountability, and who benefits. Governance is where AI meets law, policy, and society.</p>
+<h2>The regulatory landscape</h2>
+<p>The EU AI Act pioneered risk-tiered regulation: banned uses, high-risk systems with strict obligations, and lighter rules for the rest. Other jurisdictions mix sector rules, safety institutes, and voluntary commitments from frontier labs. Common threads everywhere: transparency about AI use, human oversight of consequential decisions, and accountability when systems cause harm.</p>
+<h2>The practitioner's share</h2>
+<p>Governance is not only for lawmakers. Engineers hold levers daily: documenting datasets and models (datasheets, model cards), refusing deceptive applications, privacy-preserving design, honest reporting of limitations, and escalating concerns. The aim of this entire university is captured here: capability and responsibility must be cut together, like facets of the same stone.</p>
+<div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div><ul>
+<li>Risk-tiered regulation is emerging worldwide, led by the EU AI Act.</li>
+<li>Model cards and datasheets are the practitioner's transparency tools.</li>
+<li>Ethics is a daily engineering practice, not a final chapter.</li></ul></div>`}
+ ]}
+],
+quiz:[
+ {q:"A zip code acting as a stand-in for race is an example of…",opts:["Data augmentation","A proxy variable introducing bias","Quantization","Overfitting"],a:1},
+ {q:"Specification gaming happens when…",opts:["Code fails to compile","An optimizer exploits a flawed objective","Data is too clean","Models are too small"],a:1},
+ {q:"Model cards exist to…",opts:["Speed up GPUs","Document a model's intended use and limitations","Encrypt weights","Replace testing"],a:1}
+]}
+];
+
+const GLOSSARY = [
+["Algorithm","A precise sequence of steps for solving a problem; in ML, the recipe by which a model learns from data."],
+["Attention","A mechanism letting every element of a sequence weigh the relevance of every other element; the heart of transformers."],
+["Backpropagation","The chain-rule algorithm that computes how much each weight contributed to the error, enabling training."],
+["Embedding","A learned vector representing an item (word, image, user) so that similar items sit close together in space."],
+["Epoch","One full pass of the training algorithm over the entire training dataset."],
+["Fine-tuning","Continuing to train a pretrained model on new data to adapt it to a specific task or style."],
+["GAN","Generative adversarial network: a generator and discriminator trained as opponents to produce realistic samples."],
+["Gradient descent","The optimization loop of ML: repeatedly nudge parameters downhill along the error gradient."],
+["Hallucination","Fluent but factually wrong output from a generative model; a byproduct of modeling plausibility rather than truth."],
+["Hyperparameter","A setting chosen by the practitioner rather than learned: learning rate, batch size, number of layers."],
+["Inference","Running a trained model on new inputs to produce predictions (as opposed to training)."],
+["Latent space","The compressed internal representation a model learns; nearby points decode to similar outputs."],
+["LLM","Large language model: a transformer trained on massive text to predict the next token, from which broad ability emerges."],
+["Loss function","The formula scoring how wrong a prediction is; training minimizes it."],
+["Overfitting","Memorizing training data instead of learning the general pattern; great practice scores, poor real-world scores."],
+["Parameter","A number inside the model adjusted during training; modern LLMs have billions of them."],
+["Quantization","Storing weights in lower-precision numbers (e.g., INT8) to shrink and accelerate models, especially at the edge."],
+["RAG","Retrieval-augmented generation: fetching relevant documents into the prompt so answers are grounded in real sources."],
+["Reinforcement learning","Learning a strategy through trial, error, and reward rather than labeled examples."],
+["RLHF","Reinforcement learning from human feedback: aligning model behavior with human preference rankings."],
+["Token","The chunk of text (roughly a word piece) that language models read and write one at a time."],
+["Transformer","The attention-based architecture (2017) behind virtually all modern frontier AI models."],
+["Transfer learning","Starting from a model pretrained on a large dataset and adapting it to your smaller task."],
+["Vector database","A store optimized for similarity search over embeddings; the retrieval engine behind RAG."]
+];
+
+/* =====================================================
+   App state and routing
+===================================================== */
+const state = {
+  done: {},          // lessonKey -> true
+  quiz: {},          // courseId -> best score
+  filterLevel: 0,    // 0 = all
+  search: ""
+};
+// Progress persists for this session. For a hosted deployment,
+// swap these two functions for localStorage or a backend API.
+function saveState(){ /* in-memory only */ }
+
+const $app = document.getElementById("app");
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+function lessonKey(cid,lid){ return cid+"/"+lid; }
+function courseLessons(c){ return c.modules.flatMap(m=>m.lessons); }
+function courseProgress(c){
+  const ls = courseLessons(c);
+  const done = ls.filter(l=>state.done[lessonKey(c.id,l.id)]).length;
+  return { done, total: ls.length, pct: Math.round(100*done/ls.length) };
+}
+function totalProgress(){
+  let done=0,total=0;
+  COURSES.forEach(c=>{const p=courseProgress(c);done+=p.done;total+=p.total;});
+  return {done,total,pct: total? Math.round(100*done/total):0};
+}
+
+/* ---------- SVG helpers ---------- */
+function facetMark(size, seedLevel){
+  const hues=[["#4D8DE8","#7A6CF0"],["#5FA8E0","#8E6CE8"],["#7A6CF0","#C965D8"],["#8E6CE8","#D06CC2"],["#B9860F","#E8B84B"]];
+  const [a,b]=hues[(seedLevel-1)%hues.length];
+  return `<svg width="${size}" height="${size}" viewBox="0 0 40 40" aria-hidden="true">
+    <polygon points="20,3 33,12 28,34 12,34 7,12" fill="none" stroke="${a}" stroke-width="2"/>
+    <polygon points="20,3 33,12 20,19" fill="${a}" opacity=".9"/>
+    <polygon points="33,12 28,34 20,19" fill="${b}" opacity=".85"/>
+    <polygon points="28,34 12,34 20,19" fill="${b}" opacity=".45"/>
+    <polygon points="7,12 20,3 20,19" fill="${a}" opacity=".45"/></svg>`;
+}
+function heroGem(){
+  return `<svg class="gem" viewBox="0 0 300 300" role="img" aria-label="A rotating cut diamond, the emblem of Ruff University">
+    <defs>
+      <linearGradient id="ga" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#4D8DE8"/><stop offset=".5" stop-color="#7A6CF0"/><stop offset="1" stop-color="#C965D8"/>
+      </linearGradient>
+    </defs>
+    <polygon points="150,20 250,105 205,275 95,275 50,105" fill="none" stroke="url(#ga)" stroke-width="3"/>
+    <polygon points="150,20 250,105 150,150" fill="#4D8DE8" opacity=".85"/>
+    <polygon points="250,105 205,275 150,150" fill="#7A6CF0" opacity=".8"/>
+    <polygon points="205,275 95,275 150,150" fill="#C965D8" opacity=".75"/>
+    <polygon points="95,275 50,105 150,150" fill="#7A6CF0" opacity=".45"/>
+    <polygon points="50,105 150,20 150,150" fill="#4D8DE8" opacity=".45"/>
+    <polygon class="flash" points="150,20 250,105 150,150" fill="#fff" opacity=".2"/>
+    <polygon points="120,60 175,45 150,95" fill="#fff" opacity=".35"/>
+  </svg>`;
+}
+function progressGem(pct){
+  // 12 facets light up as overall progress grows
+  const facets = [
+    "100,8 140,30 100,55","140,30 100,55 145,80","140,30 185,55 145,80","100,8 60,30 100,55",
+    "60,30 100,55 55,80","60,30 15,55 55,80","15,55 55,80 45,120","55,80 100,55 100,120",
+    "100,55 145,80 100,120","145,80 185,55 155,120","45,120 100,120 100,185","100,120 155,120 100,185"
+  ];
+  const lit = Math.round(pct/100*facets.length);
+  const polys = facets.map((p,i)=>{
+    const cls = i<lit ? `gem-facet lit-${i%5}` : "gem-facet";
+    return `<polygon class="${cls}" points="${p}"/>`;
+  }).join("");
+  return `<svg viewBox="0 0 200 195" role="img" aria-label="Your progress diamond, ${pct}% complete">${polys}
+    <polygon points="100,8 185,55 100,185 15,55" fill="none" stroke="#C6CEDC" stroke-width="1.5"/></svg>`;
+}
+
+/* =====================================================
+   Views
+===================================================== */
+function viewHome(){
+  const t = totalProgress();
+  return `
+  <section class="hero"><div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="spark">◆</span> The free school of artificial intelligence</div>
+      <h1 class="display">Every facet of AI.<br><span class="prism-text">Cut for everyone.</span></h1>
+      <p class="lede">Ruff University gathers the whole world of artificial intelligence into one place: from your first "what is AI?" to transformers, diffusion, edge deployment, and safety. You arrive rough. You leave brilliant.</p>
+      <div class="hero-actions">
+        <a class="btn btn-prism" href="#/courses">Start learning ◆</a>
+        <a class="btn btn-ghost" href="#/infinite">Infinite Library</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>${COURSES.length}</strong><span>courses</span></div>
+        <div><strong>${t.total}</strong><span>lessons</span></div>
+        <div><strong>${GLOSSARY.length}</strong><span>glossary terms</span></div>
+        <div><strong>0 EGP</strong><span>forever</span></div>
+      </div>
+    </div>
+    <div class="gem-stage">${heroGem()}</div>
+  </div></section>
+
+  <section class="cutpath"><div class="wrap">
+    <div class="eyebrow"><span class="spark">◆</span> The cut path</div>
+    <h2 style="font-size:1.6rem;margin-top:.4rem">Five stages, rough to brilliant</h2>
+    <div class="cut-row">
+      ${LEVELS.map((lv,i)=>`
+      <div class="card cut-step">
+        <div class="mono">${"◆".repeat(i+1)} ${i+1} CARAT</div>
+        <h3>${lv}</h3>
+        <p>${[
+          "First contact. What AI is, its history, and the math beneath it.",
+          "Core machine learning: models, evaluation, and honest science.",
+          "Deep learning, vision, and language: the engines of the modern era.",
+          "The frontier: generative AI and reinforcement learning.",
+          "Mastery in the world: deployment, ethics, and responsibility."
+        ][i]}</p>
+      </div>`).join("")}
+    </div>
+  </div></section>
+
+  <section class="catalog"><div class="wrap">
+    <div class="catalog-head">
+      <div>
+        <div class="eyebrow"><span class="spark">◆</span> Featured</div>
+        <h2>Begin at the beginning</h2>
+      </div>
+      <a class="btn btn-ghost" href="#/courses">All courses</a>
+    </div>
+    <div class="course-grid">${COURSES.slice(0,3).map(courseCard).join("")}</div>
+  </div></section>`;
+}
+
+function courseCard(c){
+  const p = courseProgress(c);
+  return `
+  <a class="card course-card" href="#/course/${c.id}" style="text-decoration:none">
+    <div class="facet-mark">${facetMark(74,c.level)}</div>
+    <div class="course-meta"><span class="carat">${"◆".repeat(c.level)}</span> ${LEVELS[c.level-1].toUpperCase()} · ${c.facet.toUpperCase()}</div>
+    <h3>${c.title}</h3>
+    <p class="desc">${c.desc}</p>
+    <div class="course-meta">${courseLessons(c).length} lessons · quiz${state.quiz[c.id]!=null?` · best ${state.quiz[c.id]}%`:""}</div>
+    <div class="pbar"><i style="width:${p.pct}%"></i></div>
+  </a>`;
+}
+
+function viewCourses(){
+  const q = state.search.toLowerCase();
+  const list = COURSES.filter(c=>
+    (state.filterLevel===0 || c.level===state.filterLevel) &&
+    (!q || (c.title+c.desc+c.facet).toLowerCase().includes(q))
+  );
+  return `
+  <section class="page"><div class="wrap">
+    <div class="eyebrow"><span class="spark">◆</span> Course catalog</div>
+    <h1 class="display" style="font-size:clamp(1.7rem,4vw,2.4rem);margin:.5rem 0 1.4rem">The whole mine</h1>
+    <div class="toolbar">
+      <div class="search">🔍<input id="searchBox" type="search" placeholder="Search courses…" value="${esc(state.search)}" aria-label="Search courses"></div>
+      <button class="chip ${state.filterLevel===0?"on":""}" data-level="0">All carats</button>
+      ${LEVELS.map((lv,i)=>`<button class="chip ${state.filterLevel===i+1?"on":""}" data-level="${i+1}">${"◆".repeat(i+1)} ${lv}</button>`).join("")}
+    </div>
+    ${list.length? `<div class="course-grid">${list.map(courseCard).join("")}</div>`
+      : `<p style="color:var(--dim)">No courses match that search. Clear the search box or pick another carat level to keep exploring.</p>`}
+  </div></section>`;
+}
+
+function viewCourse(cid){
+  const c = COURSES.find(x=>x.id===cid);
+  if(!c) return viewNotFound();
+  const p = courseProgress(c);
+  return `
+  <section class="page"><div class="wrap">
+    <div class="crumbs"><a href="#/courses">Courses</a> / ${c.title}</div>
+    <div class="course-hero">
+      <div class="facet-big">${facetMark(96,c.level)}</div>
+      <div style="flex:1;min-width:260px">
+        <div class="course-meta"><span class="carat">${"◆".repeat(c.level)}</span> ${LEVELS[c.level-1].toUpperCase()} · ${c.facet.toUpperCase()}</div>
+        <h1 class="display">${c.title}</h1>
+        <p>${c.desc}</p>
+        <div style="max-width:420px;margin-top:1rem">
+          <div class="course-meta">${p.done} of ${p.total} lessons complete · ${p.pct}%</div>
+          <div class="pbar"><i style="width:${p.pct}%"></i></div>
+        </div>
+      </div>
+    </div>
+    ${c.modules.map(m=>`
+      <div class="card module">
+        <div class="module-head"><h3>${m.title}</h3><span class="mono">${m.lessons.length} LESSONS</span></div>
+        <ul class="lesson-list">
+          ${m.lessons.map(l=>{
+            const done = !!state.done[lessonKey(c.id,l.id)];
+            return `<li><a class="lesson-link" style="text-decoration:none" href="#/lesson/${c.id}/${l.id}">
+              <span class="tick ${done?"done":""}">${done?"✓":""}</span>${l.title}</a></li>`;
+          }).join("")}
+        </ul>
+      </div>`).join("")}
+    <div class="card quiz" id="quizRoot">${quizHTML(c)}</div>
+  </div></section>`;
+}
+
+function quizHTML(c){
+  return `
+    <h2>◆ Facet check: ${c.title}</h2>
+    <p class="sub">${c.quiz.length} questions. Pass with 70% or more to certify this facet.${state.quiz[c.id]!=null?` Best so far: <strong>${state.quiz[c.id]}%</strong>.`:""}</p>
+    ${c.quiz.map((qq,qi)=>`
+      <div class="q" data-q="${qi}">
+        <p class="qt">${qi+1}. ${qq.q}</p>
+        ${qq.opts.map((o,oi)=>`<button class="opt" data-q="${qi}" data-o="${oi}">${o}</button>`).join("")}
+      </div>`).join("")}
+    <button class="btn btn-prism" id="gradeBtn" data-course="${c.id}">Grade my answers</button>
+    <p class="quiz-result" id="quizResult" role="status"></p>`;
+}
+
+function viewLesson(cid,lid){
+  const c = COURSES.find(x=>x.id===cid);
+  if(!c) return viewNotFound();
+  const ls = courseLessons(c);
+  const idx = ls.findIndex(l=>l.id===lid);
+  if(idx<0) return viewNotFound();
+  const l = ls[idx];
+  const done = !!state.done[lessonKey(cid,lid)];
+  const prev = ls[idx-1], next = ls[idx+1];
+  return `
+  <section class="page"><div class="wrap lesson-page">
+    <div class="crumbs"><a href="#/courses">Courses</a> / <a href="#/course/${c.id}">${c.title}</a> / Lesson ${idx+1}</div>
+    <div class="eyebrow"><span class="spark">◆</span> ${c.title} · Lesson ${idx+1} of ${ls.length}</div>
+    <h1 class="display">${l.title}</h1>
+    <div class="lesson-body">${l.body}</div>
+    <div class="lesson-nav">
+      <span>${prev?`<a class="btn btn-ghost" href="#/lesson/${cid}/${prev.id}">← ${prev.title}</a>`:""}</span>
+      <button class="btn ${done?"btn-ghost":"btn-prism"}" id="doneBtn" data-c="${cid}" data-l="${lid}">
+        ${done?"✓ Completed":"Mark complete"}</button>
+      <span>${next?`<a class="btn btn-prism" href="#/lesson/${cid}/${next.id}">${next.title} →</a>`
+        :`<a class="btn btn-prism" href="#/course/${cid}">Take the facet check →</a>`}</span>
+    </div>
+  </div></section>`;
+}
+
+function viewProgress(){
+  const t = totalProgress();
+  const quizzes = Object.keys(state.quiz).length;
+  return `
+  <section class="page"><div class="wrap">
+    <div class="eyebrow"><span class="spark">◆</span> My progress</div>
+    <h1 class="display" style="font-size:clamp(1.7rem,4vw,2.4rem);margin:.5rem 0 1.6rem">Your cut so far</h1>
+    <div class="dash-grid">
+      <div class="card dash-gem">
+        <h2>The Ruff Diamond</h2>
+        <p class="sub">Each facet lights up as you learn</p>
+        ${progressGem(t.pct)}
+        <p style="font-family:'Space Mono',monospace;font-size:.85rem"><span class="carat">◆</span> ${t.pct}% cut</p>
+      </div>
+      <div>
+        <div class="dash-stats">
+          <div class="card stat"><strong>${t.done}</strong><span>lessons completed</span></div>
+          <div class="card stat"><strong>${t.total-t.done}</strong><span>lessons remaining</span></div>
+          <div class="card stat"><strong>${quizzes}</strong><span>facet checks taken</span></div>
+        </div>
+        ${COURSES.map(c=>{const p=courseProgress(c);return `
+          <a class="card dash-course" style="text-decoration:none" href="#/course/${c.id}">
+            ${facetMark(30,c.level)}<span class="name">${c.title}</span>
+            <span class="pbar"><i style="width:${p.pct}%"></i></span>
+            <span class="pct">${p.pct}%</span>
+          </a>`;}).join("")}
+      </div>
+    </div>
+  </div></section>`;
+}
+
+function viewGlossary(){
+  return `
+  <section class="page"><div class="wrap" style="max-width:760px">
+    <div class="eyebrow"><span class="spark">◆</span> Glossary</div>
+    <h1 class="display" style="font-size:clamp(1.7rem,4vw,2.4rem);margin:.5rem 0 1.4rem">The gem cutter's lexicon</h1>
+    <dl>${GLOSSARY.map(([t,d])=>`<div class="card gloss-item"><dt>${t}</dt><dd>${d}</dd></div>`).join("")}</dl>
+  </div></section>`;
+}
+
+/* =====================================================
+   Infinite Library: AI-generated lessons on any topic
+===================================================== */
+let infiniteLesson = null, infiniteBusy = false, infiniteErr = "";
+/* Bring-your-own-key: each user pays their own AI provider. Keys live only
+   in the user's browser (localStorage when hosted; memory fallback otherwise). */
+const memStore = {};
+const store = {
+  get(k){ try{ return localStorage.getItem(k) ?? memStore[k] ?? ""; }catch(e){ return memStore[k] ?? ""; } },
+  set(k,v){ memStore[k]=v; try{ localStorage.setItem(k,v); }catch(e){} }
+};
+const PROVIDERS = {
+  google:{ label:"Google Gemini", keyUrl:"https://aistudio.google.com/apikey", hint:"Free tier available, then pay-as-you-go" },
+  anthropic:{ label:"Anthropic Claude", keyUrl:"https://console.anthropic.com", hint:"Pay-as-you-go credits" }
+};
+function getProvider(){ return store.get("ruff_provider") || "google"; }
+function getKey(){ return store.get("ruff_key_"+getProvider()); }
+const SUGGESTED = ["Mixture of experts","Kalman filters in robotics","Vision-language models","Federated learning","Neural radiance fields","Speculative decoding","Graph neural networks","AI in medical imaging","SLAM for autonomous robots","Spiking neural networks"];
+
+function viewInfinite(){
+  return `
+  <section class="page"><div class="wrap" style="max-width:760px">
+    <div class="eyebrow"><span class="spark">◆</span> Infinite Library</div>
+    <h1 class="display" style="font-size:clamp(1.7rem,4vw,2.4rem);margin:.5rem 0 .8rem">Any facet of AI, cut on demand</h1>
+    <p style="color:var(--dim);margin-bottom:1.4rem">The curriculum is the guided path. This is everything else. Name any AI topic and Ruff generates a full lesson in seconds, in the same format as the rest of the university.</p>
+    <div class="card" style="padding:18px 22px;margin-bottom:1.4rem">
+      <div class="eyebrow" style="margin-bottom:.6rem"><span class="spark">◆</span> Your AI engine ${getKey()?'· <span style="color:var(--ok)">connected</span>':"· not connected"}</div>
+      <p style="font-size:.85rem;color:var(--dim);margin-bottom:.8rem">Lessons are generated with your own API key, so you pay your provider directly and only for what you use. Your key is stored only in your browser and sent only to the provider you choose.</p>
+      <div class="toolbar" style="margin-bottom:.4rem">
+        <select id="provSel" class="chip" style="cursor:pointer">
+          ${Object.entries(PROVIDERS).map(([id,p])=>`<option value="${id}" ${getProvider()===id?"selected":""}>${p.label}</option>`).join("")}
+        </select>
+        <div class="search" style="border-radius:10px"><input id="keyInput" type="password" placeholder="Paste your API key…" value="${esc(getKey())}" aria-label="API key"></div>
+        <button class="btn btn-ghost" id="keySave">Save</button>
+      </div>
+      <p style="font-size:.78rem;color:var(--dim)">Get a key: <a href="${PROVIDERS[getProvider()].keyUrl}" target="_blank" rel="noopener">${PROVIDERS[getProvider()].keyUrl.replace("https://","")}</a> · ${PROVIDERS[getProvider()].hint}</p>
+    </div>
+    <div class="toolbar">
+      <div class="search">◆<input id="infInput" type="text" placeholder="e.g. Mixture of experts, SLAM, diffusion transformers…" aria-label="AI topic to learn" ${infiniteBusy?"disabled":""}></div>
+      <button class="btn btn-prism" id="infBtn" ${infiniteBusy?"disabled":""}>${infiniteBusy?"Cutting…":"Generate lesson"}</button>
+    </div>
+    <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.6rem">
+      ${SUGGESTED.map(s=>`<button class="chip inf-sug">${s}</button>`).join("")}
+    </div>
+    ${infiniteErr?`<div class="card" style="padding:16px 20px;border-color:#C94A4A;color:#C94A4A;margin-bottom:1rem">${esc(infiniteErr)}</div>`:""}
+    ${infiniteBusy?`<div class="card" style="padding:26px;text-align:center;color:var(--dim)">◆ Cutting a new facet: researching, structuring, writing…</div>`:""}
+    ${infiniteLesson?renderInfiniteLesson():""}
+  </div></section>`;
+}
+
+function renderInfiniteLesson(){
+  const L = infiniteLesson;
+  return `
+  <article class="card" style="padding:30px">
+    <div class="eyebrow"><span class="spark">◆</span> Generated lesson</div>
+    <h1 style="font-size:1.7rem;margin:.4rem 0 1.2rem">${esc(L.title)}</h1>
+    <div class="lesson-body">
+      ${L.sections.map(s=>`<h2>${esc(s.heading)}</h2>${s.paragraphs.map(p=>`<p>${esc(p)}</p>`).join("")}`).join("")}
+      <div class="keybox"><div class="eyebrow"><span class="spark">◆</span> Key facets</div>
+        <ul>${L.key_points.map(k=>`<li>${esc(k)}</li>`).join("")}</ul></div>
+      ${L.further?`<h2>Where to dig deeper</h2><ul>${L.further.map(f=>`<li>${esc(f)}</li>`).join("")}</ul>`:""}
+    </div>
+  </article>`;
+}
+
+function lessonPrompt(topic){
+  return `You are the master lecturer of Ruff University, a free school of artificial intelligence. Write a rigorous, intuition-first lesson about the following AI topic: "${topic}".
+Respond ONLY with valid JSON, no markdown fences, no preamble, in exactly this shape:
+{"title":"...","sections":[{"heading":"...","paragraphs":["...","..."]},{"heading":"...","paragraphs":["..."]}],"key_points":["...","...","..."],"further":["a named resource or subtopic to explore next","..."]}
+Rules: 2 to 4 sections, 1 to 3 paragraphs each, plain text only inside strings, concrete examples, no fluff. If the topic is not related to AI, computing, math, or robotics, set title to "OFF_TOPIC".`;
+}
+
+async function callGoogle(topic,key){
+  const resp = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",{
+    method:"POST",
+    headers:{"Content-Type":"application/json","x-goog-api-key":key},
+    body:JSON.stringify({contents:[{parts:[{text:lessonPrompt(topic)}]}]})
+  });
+  const data = await resp.json();
+  if(data.error) throw new Error(data.error.message||"Google API error");
+  return (data.candidates?.[0]?.content?.parts||[]).map(p=>p.text||"").join("\n");
+}
+
+async function callAnthropic(topic,key){
+  const headers = {"Content-Type":"application/json"};
+  if(key){ headers["x-api-key"]=key; headers["anthropic-version"]="2023-06-01"; headers["anthropic-dangerous-direct-browser-access"]="true"; }
+  const resp = await fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST", headers,
+    body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:1000,
+      messages:[{role:"user",content:lessonPrompt(topic)}]})
+  });
+  const data = await resp.json();
+  if(data.error) throw new Error(data.error.message||"Anthropic API error");
+  return (data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n");
+}
+
+async function generateLesson(topic){
+  infiniteBusy = true; infiniteErr = ""; render();
+  const key = getKey(), prov = getProvider();
+  try{
+    let text;
+    if(key && prov==="google") text = await callGoogle(topic,key);
+    else text = await callAnthropic(topic,key); // user key, or keyless (works in the Claude preview)
+    const clean = text.replace(/```json|```/g,"").trim();
+    const L = JSON.parse(clean.slice(clean.indexOf("{"), clean.lastIndexOf("}")+1));
+    if(L.title==="OFF_TOPIC"){ infiniteErr="That topic is outside the mine. Try any subject in AI, machine learning, robotics, or the math beneath them."; infiniteLesson=null; }
+    else infiniteLesson = L;
+  }catch(err){
+    infiniteErr = key
+      ? "The provider rejected the request: "+err.message+" Check that your key is valid and has credit."
+      : "No API key connected. Paste your own key above (Google Gemini has a free tier) to power the Infinite Library. You pay your provider directly for what you use.";
+  }
+  infiniteBusy = false; render();
+}
+
+function viewNotFound(){
+  return `<section class="page"><div class="wrap" style="text-align:center;padding-top:60px">
+    <h1 class="display">This facet doesn't exist yet</h1>
+    <p style="color:var(--dim);margin:.8rem 0 1.4rem">The page you're after isn't in the catalog.</p>
+    <a class="btn btn-prism" href="#/courses">Back to courses</a></div></section>`;
+}
+
+/* =====================================================
+   Router and events
+===================================================== */
+let route = (location.hash||"").replace(/^#/,"") || "/";
+function go(r){
+  route = r;
+  try{ if(("#"+r)!==location.hash) location.hash = r; }catch(e){}
+  render();
+}
+function render(){
+  const parts = route.split("/").filter(Boolean);
+  let html, nav="home";
+  if(parts.length===0){ html=viewHome(); }
+  else if(parts[0]==="courses"){ html=viewCourses(); nav="courses"; }
+  else if(parts[0]==="course"){ html=viewCourse(parts[1]); nav="courses"; }
+  else if(parts[0]==="lesson"){ html=viewLesson(parts[1],parts[2]); nav="courses"; }
+  else if(parts[0]==="infinite"){ html=viewInfinite(); nav="infinite"; }
+  else if(parts[0]==="progress"){ html=viewProgress(); nav="progress"; }
+  else if(parts[0]==="glossary"){ html=viewGlossary(); nav="glossary"; }
+  else html=viewNotFound();
+  $app.innerHTML = html;
+  document.querySelectorAll("[data-nav]").forEach(a=>a.classList.toggle("active",a.dataset.nav===nav));
+  document.getElementById("navLinks").classList.remove("open");
+  window.scrollTo({top:0});
+  wire();
+}
+
+function wire(){
+  const sb = document.getElementById("searchBox");
+  if(sb){
+    sb.addEventListener("input",e=>{
+      state.search=e.target.value;
+      // re-render only the grid area to keep focus
+      const page = viewCourses();
+      $app.innerHTML = page; wire();
+      const nb=document.getElementById("searchBox");
+      nb.focus(); nb.setSelectionRange(nb.value.length,nb.value.length);
+    });
+  }
+  document.querySelectorAll(".chip[data-level]").forEach(ch=>
+    ch.addEventListener("click",()=>{state.filterLevel=+ch.dataset.level;render();}));
+
+  const infBtn=document.getElementById("infBtn");
+  if(infBtn){
+    const provSel=document.getElementById("provSel");
+    provSel.addEventListener("change",()=>{ store.set("ruff_provider",provSel.value); render(); });
+    document.getElementById("keySave").addEventListener("click",()=>{
+      store.set("ruff_key_"+getProvider(), document.getElementById("keyInput").value.trim());
+      infiniteErr=""; render();
+    });
+    const start=()=>{
+      const v=document.getElementById("infInput").value.trim();
+      if(v && !infiniteBusy) generateLesson(v);
+    };
+    infBtn.addEventListener("click",start);
+    document.getElementById("infInput").addEventListener("keydown",e=>{if(e.key==="Enter")start();});
+    document.querySelectorAll(".inf-sug").forEach(ch=>ch.addEventListener("click",()=>{
+      if(!infiniteBusy){document.getElementById("infInput").value=ch.textContent;start();}
+    }));
+  }
+
+  const done=document.getElementById("doneBtn");
+  if(done) done.addEventListener("click",()=>{
+    const k=lessonKey(done.dataset.c,done.dataset.l);
+    state.done[k]=!state.done[k];
+    if(!state.done[k]) delete state.done[k];
+    saveState(); render();
+  });
+
+  document.querySelectorAll(".opt").forEach(o=>o.addEventListener("click",()=>{
+    document.querySelectorAll(`.opt[data-q="${o.dataset.q}"]`).forEach(x=>x.classList.remove("picked"));
+    o.classList.add("picked");
+  }));
+  const grade=document.getElementById("gradeBtn");
+  if(grade) grade.addEventListener("click",()=>{
+    const c=COURSES.find(x=>x.id===grade.dataset.course);
+    let correct=0;
+    c.quiz.forEach((qq,qi)=>{
+      const picked=document.querySelector(`.opt[data-q="${qi}"].picked`);
+      document.querySelectorAll(`.opt[data-q="${qi}"]`).forEach(x=>{
+        x.classList.remove("right","wrong");
+        if(+x.dataset.o===qq.a) x.classList.add("right");
+      });
+      if(picked && +picked.dataset.o===qq.a) correct++;
+      else if(picked) picked.classList.add("wrong");
+    });
+    const pct=Math.round(100*correct/c.quiz.length);
+    if(state.quiz[c.id]==null || pct>state.quiz[c.id]) state.quiz[c.id]=pct;
+    saveState();
+    const res=document.getElementById("quizResult");
+    res.textContent = pct>=70
+      ? `◆ ${pct}% — facet certified. Brilliant.`
+      : `${pct}% — not yet. Review the lessons above and cut again.`;
+    res.style.color = pct>=70 ? "var(--ok)" : "#C94A4A";
+  });
+}
+
+document.getElementById("menuBtn").addEventListener("click",()=>
+  document.getElementById("navLinks").classList.toggle("open"));
+// Click delegation: internal links work even if the viewer blocks hash navigation
+document.addEventListener("click",e=>{
+  const a = e.target.closest('a[href^="#/"], a[href="#/"]');
+  if(a){ e.preventDefault(); go(a.getAttribute("href").slice(1)); }
+});
+window.addEventListener("hashchange",()=>{
+  route = (location.hash||"").replace(/^#/,"") || "/";
+  render();
+});
+render();
+</script>
+</body>
+</html>
